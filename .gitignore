@@ -1,0 +1,6 @@
+binance-terminal
+binance-terminal.exe
+dist/
+.DS_Store
+*.tmp
+*.log

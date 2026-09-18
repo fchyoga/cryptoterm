@@ -1,0 +1,28 @@
+{
+  "name": "binance-terminal",
+  "version": "1.0.0",
+  "description": "Terminal crypto price monitoring for Binance (Majors, Stables) and DEXs (Solana, Base, ETH Memecoins)",
+  "main": "bin/cli.js",
+  "bin": {
+    "binance-terminal": "./bin/cli.js"
+  },
+  "scripts": {
+    "start": "./bin/cli.js",
+    "build": "go build -ldflags=\"-s -w\" -o binance-terminal cmd/binance-terminal/main.go",
+    "test": "go test ./..."
+  },
+  "keywords": [
+    "crypto",
+    "binance",
+    "terminal",
+    "tui",
+    "price-tracker",
+    "bitcoin",
+    "solana",
+    "memecoin",
+    "dexscreener",
+    "bubbletea"
+  ],
+  "author": "",
+  "license": "MIT"
+}

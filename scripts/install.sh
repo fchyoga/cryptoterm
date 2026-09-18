@@ -10,21 +10,26 @@ echo "  Installing ${APP_NAME}..."
 echo "==============================================="
 
 # Determine target directory
-TARGET_DIR="$INSTALL_DIR"
-if [ ! -w "$INSTALL_DIR" ]; then
-    if sudo -n true 2>/dev/null; then
-        USE_SUDO=1
-    else
-        echo "Note: No write permission for ${INSTALL_DIR}. Installing to ${ALT_INSTALL_DIR} instead."
-        mkdir -p "${ALT_INSTALL_DIR}"
-        TARGET_DIR="${ALT_INSTALL_DIR}"
-        USE_SUDO=0
-    fi
+if [ -n "$PREFIX" ] && [ -d "$PREFIX/bin" ]; then
+    # Termux Android environment
+    TARGET_DIR="$PREFIX/bin"
+    USE_SUDO=0
+elif [ -w "$INSTALL_DIR" ]; then
+    TARGET_DIR="$INSTALL_DIR"
+    USE_SUDO=0
+elif command -v sudo >/dev/null 2>&1 && sudo -n true 2>/dev/null; then
+    TARGET_DIR="$INSTALL_DIR"
+    USE_SUDO=1
+else
+    echo "Note: Installing to ${ALT_INSTALL_DIR}."
+    mkdir -p "${ALT_INSTALL_DIR}"
+    TARGET_DIR="${ALT_INSTALL_DIR}"
+    USE_SUDO=0
 fi
 
 # Build binary
 echo "Building ${APP_NAME} binary with Go..."
-go build -ldflags="-s -w" -o "${APP_NAME}" cmd/cryptoterm/main.go
+go build -ldflags="-s -w" -o "${APP_NAME}" ./cmd/cryptoterm
 
 # Install
 echo "Installing to ${TARGET_DIR}/${APP_NAME}..."

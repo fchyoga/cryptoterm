@@ -1,7 +1,7 @@
-cryptoterm
-cryptoterm.exe
-binance-terminal
-binance-terminal.exe
+/cryptoterm
+/cryptoterm.exe
+/binance-terminal
+/binance-terminal.exe
 dist/
 .DS_Store
 *.tmp

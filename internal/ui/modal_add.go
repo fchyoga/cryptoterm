@@ -3,7 +3,7 @@ package ui
 import (
 	"strings"
 
-	"binance-terminal/internal/model"
+	"github.com/fchyoga/cryptoterm/internal/model"
 
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"

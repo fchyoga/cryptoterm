@@ -5,7 +5,7 @@ import (
 	"math"
 	"strings"
 
-	"binance-terminal/internal/model"
+	"github.com/fchyoga/cryptoterm/internal/model"
 
 	"github.com/charmbracelet/lipgloss"
 )

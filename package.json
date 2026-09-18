@@ -1,28 +1,41 @@
 {
-  "name": "binance-terminal",
+  "name": "cryptoterm",
   "version": "1.0.0",
-  "description": "Terminal crypto price monitoring for Binance (Majors, Stables) and DEXs (Solana, Base, ETH Memecoins)",
+  "description": "Ultra-fast TUI crypto & meme coin terminal. Live Binance WebSocket tickers, DEX meme tracking (Solana, Base, ETH), sparklines, price alerts & portfolio tracker.",
   "main": "bin/cli.js",
   "bin": {
-    "binance-terminal": "./bin/cli.js"
+    "cryptoterm": "./bin/cli.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fchyoga/cryptoterm.git"
+  },
+  "bugs": {
+    "url": "https://github.com/fchyoga/cryptoterm/issues"
+  },
+  "homepage": "https://github.com/fchyoga/cryptoterm#readme",
   "scripts": {
     "start": "./bin/cli.js",
-    "build": "go build -ldflags=\"-s -w\" -o binance-terminal cmd/binance-terminal/main.go",
+    "build": "go build -ldflags=\"-s -w\" -o cryptoterm cmd/cryptoterm/main.go",
     "test": "go test ./..."
   },
   "keywords": [
+    "cryptoterm",
     "crypto",
+    "cryptocurrency",
     "binance",
     "terminal",
     "tui",
-    "price-tracker",
-    "bitcoin",
-    "solana",
-    "memecoin",
+    "bubbletea",
+    "golang",
     "dexscreener",
-    "bubbletea"
+    "memecoin",
+    "solana",
+    "bitcoin",
+    "price-tracker",
+    "cli",
+    "trading"
   ],
-  "author": "",
+  "author": "fchyoga",
   "license": "MIT"
 }

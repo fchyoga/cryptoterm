@@ -5,9 +5,9 @@ import (
 	"testing"
 	"time"
 
-	"binance-terminal/internal/config"
-	"binance-terminal/internal/model"
-	"binance-terminal/internal/ui"
+	"github.com/fchyoga/cryptoterm/internal/config"
+	"github.com/fchyoga/cryptoterm/internal/model"
+	"github.com/fchyoga/cryptoterm/internal/ui"
 
 	tea "github.com/charmbracelet/bubbletea"
 )

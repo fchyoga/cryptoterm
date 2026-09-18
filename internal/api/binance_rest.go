@@ -13,7 +13,7 @@ import (
 	"strings"
 	"time"
 
-	"binance-terminal/internal/model"
+	"github.com/fchyoga/cryptoterm/internal/model"
 )
 const (
 	binancePublicRESTURL = "https://data-api.binance.vision"

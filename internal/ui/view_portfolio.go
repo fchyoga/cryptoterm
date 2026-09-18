@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"binance-terminal/internal/model"
+	"github.com/fchyoga/cryptoterm/internal/model"
 
 	"github.com/charmbracelet/lipgloss"
 )
@@ -31,7 +31,7 @@ func RenderPortfolio(items []model.PortfolioItem, hasCredentials bool, currency 
 		b.WriteString("3. Save and return here to monitor your live portfolio!\n\n")
 
 		noteStyle := lipgloss.NewStyle().Foreground(lipgloss.Color("#A6ADC8")).Italic(true)
-		b.WriteString(noteStyle.Render("🔒 Security Notice: Your keys are stored locally on your device in\n~/.config/binance-terminal/config.json and never sent anywhere except directly to Binance."))
+		b.WriteString(noteStyle.Render("🔒 Security Notice: Your keys are stored locally on your device in\n~/.config/cryptoterm/config.json and never sent anywhere except directly to Binance."))
 
 		return cardStyle.Render(b.String())
 	}

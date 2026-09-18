@@ -1,11 +1,10 @@
-# ⚡ Binance & DEX Terminal (`binance-terminal`)
+# ⚡ cryptoterm
 
-Terminal TUI (*Terminal User Interface*) interaktif, cepat, dan modern untuk memantau harga cryptocurrency secara *real-time*, baik **koin major**, **stablecoin**, maupun **meme coin DEX (Solana, Base, Ethereum, BSC)**.
+> **A blazing-fast, keyboard-driven terminal dashboard for real-time crypto prices — from Bitcoin & stablecoins on Binance to trending memecoins on Solana & Base.**
 
-Dirancang dengan prinsip **SLC (Simple, Lovable, Complete)**:
-- **Simple**: Langsung jalan dalam 1 detik tanpa konfigurasi awal. Tidak wajib API key untuk monitoring harga publik.
-- **Lovable**: Tampilan modern dengan palet warna neon, sparkline grafik tren harga, pembaruan real-time, dan animasi indikator harga naik/turun.
-- **Complete**: Streaming WebSocket Binance, integrasi DexScreener untuk meme coin baru, integrasi Signed API Binance untuk melacak saldo & portofolio spot, alert harga, dan penyimpanan konfigurasi otomatis.
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Go Version](https://img.shields.io/badge/Go-1.22+-00ADD8.svg)](https://go.dev)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/fchyoga/cryptoterm/pulls)
 
 ---
 
@@ -29,47 +28,63 @@ TICKER        SRC    CAT    PRICE          24H CHG     24H HIGH     24H LOW     
 
 ---
 
-## 🚀 Cara Instalasi untuk Semua Orang
+## 🌟 Fitur Utama (SLC — Simple, Lovable, Complete)
 
-Aplikasi ini dapat diinstal dan dijalankan dengan berbagai cara sesuai kenyamanan Anda:
+- ⚡ **Real-Time Live WebSocket**: Data harga dari Binance streaming setiap milidetik langsung dari matching engine.
+- 🐶 **DEX & Meme Coin Radar**: Pantau token Solana (Raydium, Pump.fun), Base, Ethereum, dan BSC langsung via DexScreener API.
+- 📊 **Unicode Sparklines**: Grafik tren harga mini langsung di dalam baris terminal tanpa dependensi eksternal.
+- 💼 **Pelacak Portofolio Spot**: Hubungkan API Key Binance (Read-Only) untuk memantau saldo wallet dan total nilai portofolio dalam USD/IDR.
+- 🔔 **Price Alerts**: Pasang target harga koin; terminal akan membunyikan bell audio (`\a`) dan memunculkan toast banner saat harga tersentuh.
+- 🇮🇩 **Anti-Blokir (Bebas VPN)**: Menggunakan mirror resmi Binance Vision (`data-stream.binance.vision`), lancar diakses dari jaringan Indonesia (Indihome, Biznet, Telkomsel, Starlink, dll.) tanpa VPN.
+- 💾 **Persistensi Otomatis**: Konfigurasi watchlist, alert, dan token kustom tersimpan rapi di `~/.config/cryptoterm/config.json`.
 
-### Metode 1: Instal Cepat via Makefile / Script (Rekomendasi)
+---
+
+## 🚀 Cara Instalasi
+
+Pilih cara instalasi yang paling mudah untuk Anda:
+
+### 1. One-Line Installer (macOS & Linux)
 ```bash
-# Clone repository
-git clone https://github.com/binance-terminal/binance-terminal.git
-cd binance-terminal
+curl -fsSL https://raw.githubusercontent.com/fchyoga/cryptoterm/main/scripts/install.sh | bash
+```
 
-# Jalankan installer otomatis (meng-compile dan menaruh binary ke /usr/local/bin)
-./scripts/install.sh
+### 2. Via Go Install
+Jika Anda sudah memiliki Go terinstall:
+```bash
+go install github.com/fchyoga/cryptoterm/cmd/cryptoterm@latest
+```
+*(Pastikan `$GOPATH/bin` ada di dalam `PATH` Anda)*
 
-# Atau menggunakan make
+### 3. Via NPX / NPM (Zero-Install untuk Pengguna Node.js)
+```bash
+npx cryptoterm
+# atau install global
+npm install -g cryptoterm
+```
+
+### 4. Build Manual dari Source
+```bash
+git clone https://github.com/fchyoga/cryptoterm.git
+cd cryptoterm
 make install
 ```
-Setelah itu, Anda bisa langsung mengetik `binance-terminal` di terminal mana saja.
 
-### Metode 2: Jalankan Instan via NPX (Pengguna Node.js)
+Setelah terinstall, cukup jalankan:
 ```bash
-npx binance-terminal
-# Atau instal secara global
-npm install -g binance-terminal
-```
-
-### Metode 3: Build Mandiri dengan Go
-```bash
-go build -ldflags="-s -w" -o binance-terminal cmd/binance-terminal/main.go
-./binance-terminal
+cryptoterm
 ```
 
 ---
 
-## 🎮 Navigasi & Shortcut Keyboard
+## 🎮 Kontrol & Shortcut Keyboard
 
 | Tombol | Fungsi |
 | :--- | :--- |
 | `Tab` / `1 - 4` | Pindah tab: `[1] Watchlist`, `[2] Meme Radar`, `[3] Portfolio`, `[4] Detail View` |
 | `↑` / `↓` atau `j` / `k` | Navigasi kursor naik/turun memilih koin |
 | `Enter` | Buka tampilan detail statistik koin yang sedang dipilih |
-| `a` | **Tambah koin baru** ke Watchlist (otomatis deteksi simbol Binance atau Contract Address DEX) |
+| `a` | **Tambah koin baru** ke Watchlist (simbol Binance atau paste Contract Address DEX) |
 | `d` atau `x` | **Hapus koin** yang dipilih dari Watchlist |
 | `/` | **Filter / Cari cepat** koin di watchlist yang sedang aktif |
 | `s` | **Urutkan (Sort)** daftar berdasarkan: Default, Kenaikan 24h (%), Harga, Volume, atau Nama |
@@ -83,58 +98,49 @@ go build -ldflags="-s -w" -o binance-terminal cmd/binance-terminal/main.go
 
 ## 🔑 Konfigurasi API Binance (Opsional)
 
-> **Catatan Penting**: Anda **TIDAK PERLU** memasukkan API key jika hanya ingin memantau harga publik Binance dan koin meme DEX. Data harga publik langsung berjalan otomatis.
+> 💡 **Monitoring harga publik TIDAK butuh API key apa pun.** Data harga Binance dan DEX langsung berjalan otomatis begitu aplikasi dibuka.
 
-API Key hanya diperlukan jika Anda ingin menggunakan **Tab [3] Portfolio** untuk memantau saldo spot Binance Anda.
+API Key hanya digunakan jika Anda ingin mengaktifkan fitur **Tab [3] Portfolio** untuk memantau saldo spot Binance Anda.
 
-### Cara Memasukkan API Key:
-1. Jalankan `binance-terminal`.
-2. Tekan tombol **`c`** pada keyboard untuk membuka menu konfigurasi.
+### Langkah Setup API:
+1. Buka `cryptoterm`.
+2. Tekan tombol **`c`** pada keyboard.
 3. Masukkan **Binance API Key** dan **Binance API Secret**.
-4. *(Tips Keamanan)*: Di akun Binance Anda, buat API Key dengan izin **hanya Baca (Read-Only)**. Jangan aktifkan izin Spot Trading atau Withdrawal.
-5. Tekan `Tab` lalu pilih **[ SAVE & APPLY ]** dan tekan `Enter`.
-6. Tekan `3` untuk membuka Tab Portfolio dan melihat saldo aset crypto Anda secara real-time.
+4. *(Tips Keamanan)*: Buat API Key di dashboard Binance dengan izin **Read-Only**. **JANGAN** aktifkan izin Spot Trading atau Withdrawal.
+5. Tekan `Tab` menuju **[ SAVE & APPLY ]** dan tekan `Enter`.
+6. Tekan tombol `3` untuk melihat total nilai dan rincian saldo koin spot Anda secara real-time.
 
 Kredensial disimpan secara aman di mesin lokal Anda pada:
 ```
-~/.config/binance-terminal/config.json
+~/.config/cryptoterm/config.json
 ```
 
 ---
 
-## 💎 Memantau Koin Meme DEX (Solana, Base, Ethereum)
+## 💎 Memantau Koin Meme DEX (Solana, Base, Ethereum, BSC)
 
-Koin meme yang belum listing di Binance tetap bisa dipantau langsung!
-
-1. Tekan tombol **`a`** untuk membuka menu tambah koin.
-2. Masukkan simbol koin atau **paste Smart Contract Address (CA)** token tersebut (contoh: mint address token Solana dari Pump.fun atau Raydium).
-3. Pilih Data Source: `DEX (DexScreener)` atau `Auto-Detect`.
-4. Tekan `Enter`. Aplikasi akan otomatis mengambil data harga USD, likuiditas, FDV / Market Cap, dan pergerakan 24 jam langsung dari DexScreener.
-
----
-
-## 🇮🇩 Dukungan Anti-Blokir / Bebas VPN (Indonesia & Global)
-
-Secara default, aplikasi menggunakan endpoint resmi **Binance Vision Mirror** (`https://data-api.binance.vision` dan `wss://data-stream.binance.vision:9443`) untuk data publik. 
-
-Artinya, aplikasi ini dapat langsung digunakan oleh pengguna di Indonesia (Telkomsel, Indihome, Biznet, Starlink, dll.) **tanpa perlu menggunakan VPN**!
+Token meme yang belum listing di Binance tetap bisa dipantau langsung:
+1. Tekan tombol **`a`**.
+2. Masukkan simbol atau **paste Smart Contract Address (CA)** token tersebut (contoh: alamat mint token Solana dari Pump.fun / Raydium).
+3. Pilih Data Source `DEX (DexScreener)` atau `Auto-Detect`.
+4. Tekan `Enter`. Data harga USD, likuiditas, FDV (Market Cap), dan pergerakan 24 jam akan langsung ditampilkan.
 
 ---
 
-## 🛠️ Struktur Proyek
+## 🛠️ Struktur Repositori
 
 ```
-binance-terminal/
+cryptoterm/
 ├── cmd/
-│   └── binance-terminal/
+│   └── cryptoterm/
 │       └── main.go              # Entry point aplikasi
 ├── internal/
 │   ├── api/
-│   │   ├── binance_ws.go        # Binance WebSocket Client (real-time stream)
+│   │   ├── binance_ws.go        # Binance WebSocket Client (live stream)
 │   │   ├── binance_rest.go      # Binance REST Client & Signed Account Portfolio
 │   │   └── dexscreener.go       # DexScreener Client (Meme coin multi-chain)
 │   ├── config/
-│   │   └── config.go            # Penyimpanan ~/.config/binance-terminal/config.json
+│   │   └── config.go            # Penyimpanan ~/.config/cryptoterm/config.json
 │   ├── model/
 │   │   └── types.go             # Struct tipe data pasar, koin, portofolio, dan alert
 │   └── ui/
@@ -147,7 +153,7 @@ binance-terminal/
 │       ├── modal_alert.go       # Modal pasang target alert harga
 │       └── view_portfolio.go    # Tampilan portofolio saldo spot
 ├── scripts/
-│   └── install.sh               # Shell script installer
+│   └── install.sh               # One-line installer script
 ├── bin/
 │   └── cli.js                   # Node CLI wrapper untuk npx
 ├── Makefile                     # Build, install, run, cross-compile
@@ -158,5 +164,11 @@ binance-terminal/
 
 ---
 
+## 🤝 Kontribusi & Dukungan
+
+Kontribusi, *pull request*, dan *issue report* sangat diterima! Jika Anda menyukai project ini, jangan lupa berikan ⭐ **Star** di [GitHub Repository](https://github.com/fchyoga/cryptoterm).
+
+---
+
 ## 📜 Lisensi
-MIT License © 2026.
+[MIT License](LICENSE) © 2026 [fchyoga](https://github.com/fchyoga).

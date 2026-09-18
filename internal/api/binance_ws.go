@@ -10,7 +10,7 @@ import (
 	"sync"
 	"time"
 
-	"binance-terminal/internal/model"
+	"github.com/fchyoga/cryptoterm/internal/model"
 
 	"github.com/gorilla/websocket"
 )

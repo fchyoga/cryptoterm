@@ -6,9 +6,9 @@ import (
 	"strings"
 	"time"
 
-	"binance-terminal/internal/api"
-	"binance-terminal/internal/config"
-	"binance-terminal/internal/model"
+	"github.com/fchyoga/cryptoterm/internal/api"
+	"github.com/fchyoga/cryptoterm/internal/config"
+	"github.com/fchyoga/cryptoterm/internal/model"
 
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"

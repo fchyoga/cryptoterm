@@ -1,4 +1,4 @@
-APP_NAME := binance-terminal
+APP_NAME := cryptoterm
 VERSION := 1.0.0
 BUILD_DIR := dist
 LDFLAGS := -s -w
@@ -9,7 +9,7 @@ all: build
 
 build:
 	@echo "Building $(APP_NAME) for current system..."
-	go build -ldflags="$(LDFLAGS)" -o $(APP_NAME) cmd/binance-terminal/main.go
+	go build -ldflags="$(LDFLAGS)" -o $(APP_NAME) cmd/cryptoterm/main.go
 	@echo "✅ Build complete: ./$(APP_NAME)"
 
 install: build
@@ -28,13 +28,13 @@ cross-compile:
 	@echo "Cross-compiling $(APP_NAME) v$(VERSION)..."
 	@mkdir -p $(BUILD_DIR)
 	# macOS (Apple Silicon & Intel)
-	GOOS=darwin GOARCH=arm64 go build -ldflags="$(LDFLAGS)" -o $(BUILD_DIR)/$(APP_NAME)-darwin-arm64 cmd/binance-terminal/main.go
-	GOOS=darwin GOARCH=amd64 go build -ldflags="$(LDFLAGS)" -o $(BUILD_DIR)/$(APP_NAME)-darwin-amd64 cmd/binance-terminal/main.go
+	GOOS=darwin GOARCH=arm64 go build -ldflags="$(LDFLAGS)" -o $(BUILD_DIR)/$(APP_NAME)-darwin-arm64 cmd/cryptoterm/main.go
+	GOOS=darwin GOARCH=amd64 go build -ldflags="$(LDFLAGS)" -o $(BUILD_DIR)/$(APP_NAME)-darwin-amd64 cmd/cryptoterm/main.go
 	# Linux (x86_64 & ARM64)
-	GOOS=linux GOARCH=amd64 go build -ldflags="$(LDFLAGS)" -o $(BUILD_DIR)/$(APP_NAME)-linux-amd64 cmd/binance-terminal/main.go
-	GOOS=linux GOARCH=arm64 go build -ldflags="$(LDFLAGS)" -o $(BUILD_DIR)/$(APP_NAME)-linux-arm64 cmd/binance-terminal/main.go
+	GOOS=linux GOARCH=amd64 go build -ldflags="$(LDFLAGS)" -o $(BUILD_DIR)/$(APP_NAME)-linux-amd64 cmd/cryptoterm/main.go
+	GOOS=linux GOARCH=arm64 go build -ldflags="$(LDFLAGS)" -o $(BUILD_DIR)/$(APP_NAME)-linux-arm64 cmd/cryptoterm/main.go
 	# Windows (x86_64)
-	GOOS=windows GOARCH=amd64 go build -ldflags="$(LDFLAGS)" -o $(BUILD_DIR)/$(APP_NAME)-windows-amd64.exe cmd/binance-terminal/main.go
+	GOOS=windows GOARCH=amd64 go build -ldflags="$(LDFLAGS)" -o $(BUILD_DIR)/$(APP_NAME)-windows-amd64.exe cmd/cryptoterm/main.go
 	@echo "✅ Cross-compile complete in $(BUILD_DIR)/:"
 	@ls -lh $(BUILD_DIR)
 

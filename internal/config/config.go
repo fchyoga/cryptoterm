@@ -8,7 +8,7 @@ import (
 	"sync"
 	"time"
 
-	"binance-terminal/internal/model"
+	"github.com/fchyoga/cryptoterm/internal/model"
 )
 
 var (
@@ -141,7 +141,7 @@ func GetConfigDir() (string, error) {
 	if err != nil {
 		return "", err
 	}
-	dir := filepath.Join(home, ".config", "binance-terminal")
+	dir := filepath.Join(home, ".config", "cryptoterm")
 	return dir, nil
 }
 

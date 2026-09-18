@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-APP_NAME="binance-terminal"
+APP_NAME="cryptoterm"
 INSTALL_DIR="/usr/local/bin"
 ALT_INSTALL_DIR="$HOME/.local/bin"
 
@@ -24,7 +24,7 @@ fi
 
 # Build binary
 echo "Building ${APP_NAME} binary with Go..."
-go build -ldflags="-s -w" -o "${APP_NAME}" cmd/binance-terminal/main.go
+go build -ldflags="-s -w" -o "${APP_NAME}" cmd/cryptoterm/main.go
 
 # Install
 echo "Installing to ${TARGET_DIR}/${APP_NAME}..."

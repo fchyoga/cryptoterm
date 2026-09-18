@@ -3,7 +3,7 @@ package api_test
 import (
 	"testing"
 
-	"binance-terminal/internal/api"
+	"github.com/fchyoga/cryptoterm/internal/api"
 )
 
 func TestBinanceFetch24hrTickers(t *testing.T) {

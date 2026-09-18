@@ -1,9 +1,12 @@
+<p align="center">
+  <img src="assets/banner.svg" alt="cryptoterm - Terminal Crypto Dashboard" width="100%">
+</p>
+
 # cryptoterm
 
 <p align="center">
-  <strong>A high-performance, keyboard-driven terminal dashboard for real-time cryptocurrency & DEX meme coin market data.</strong>
+  <strong>A high-performance, keyboard-driven terminal dashboard for real-time cryptocurrency &amp; DEX meme coin market data.</strong>
 </p>
-
 <p align="center">
   <a href="https://github.com/fchyoga/cryptoterm/releases"><img src="https://img.shields.io/github/v/release/fchyoga/cryptoterm?color=7D56F4&style=flat-square" alt="Latest Release"></a>
   <a href="https://pkg.go.dev/github.com/fchyoga/cryptoterm"><img src="https://img.shields.io/badge/go.dev-reference-007d9c?logo=go&logoColor=white&style=flat-square" alt="Go Reference"></a>

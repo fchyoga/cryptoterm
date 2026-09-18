@@ -1,0 +1,250 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 480" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#07070E"/>
+      <stop offset="50%" stop-color="#0E0C1D"/>
+      <stop offset="100%" stop-color="#090814"/>
+    </linearGradient>
+
+    <!-- Brand Gradients -->
+    <linearGradient id="brandGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#A78BFA"/>
+      <stop offset="50%" stop-color="#818CF8"/>
+      <stop offset="100%" stop-color="#38BDF8"/>
+    </linearGradient>
+
+    <linearGradient id="neonCyan" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00F0FF"/>
+      <stop offset="100%" stop-color="#7000FF"/>
+    </linearGradient>
+
+    <linearGradient id="cardBorder" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4C3D8F"/>
+      <stop offset="50%" stop-color="#26214B"/>
+      <stop offset="100%" stop-color="#00F0FF" stop-opacity="0.4"/>
+    </linearGradient>
+
+    <!-- Ambient Glows -->
+    <radialGradient id="glowViolet" cx="20%" cy="30%" r="60%">
+      <stop offset="0%" stop-color="#7D56F4" stop-opacity="0.28"/>
+      <stop offset="100%" stop-color="#07070E" stop-opacity="0"/>
+    </radialGradient>
+
+    <radialGradient id="glowCyan" cx="80%" cy="40%" r="50%">
+      <stop offset="0%" stop-color="#00F0FF" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#07070E" stop-opacity="0"/>
+    </radialGradient>
+
+    <radialGradient id="glowGreen" cx="60%" cy="80%" r="40%">
+      <stop offset="0%" stop-color="#10B981" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#07070E" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Dot Grid Pattern -->
+    <pattern id="dotGrid" x="0" y="0" width="28" height="28" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.2" fill="#312B5E" fill-opacity="0.35"/>
+    </pattern>
+
+    <!-- Drop Shadows -->
+    <filter id="cardShadow" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="16" stdDeviation="24" flood-color="#000000" flood-opacity="0.65"/>
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#7D56F4" flood-opacity="0.25"/>
+    </filter>
+
+    <filter id="glowText" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background Layer -->
+  <rect width="1200" height="480" fill="url(#bgGrad)"/>
+  <rect width="1200" height="480" fill="url(#glowViolet)"/>
+  <rect width="1200" height="480" fill="url(#glowCyan)"/>
+  <rect width="1200" height="480" fill="url(#glowGreen)"/>
+  <rect width="1200" height="480" fill="url(#dotGrid)"/>
+
+  <!-- Left Column: Branding & Taglines -->
+  <g transform="translate(64, 70)">
+    <!-- Pill Badge -->
+    <g>
+      <rect x="0" y="0" width="232" height="32" rx="16" fill="#1E193B" stroke="#4C3D8F" stroke-width="1.2"/>
+      <circle cx="16" cy="16" r="4.5" fill="#00F0FF"/>
+      <text x="28" y="20.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'JetBrains Mono', sans-serif" font-size="12" font-weight="700" fill="#E2E8F0" letter-spacing="1">REAL-TIME CRYPTO TUI</text>
+    </g>
+
+    <!-- Main Title -->
+    <g transform="translate(0, 72)">
+      <text x="0" y="0" font-family="'JetBrains Mono', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, monospace" font-size="58" font-weight="900" fill="url(#brandGrad)" letter-spacing="-1.5">cryptoterm</text>
+      <text x="360" y="-18" font-family="'JetBrains Mono', monospace" font-size="20" font-weight="700" fill="#00F0FF">⚡</text>
+    </g>
+
+    <!-- Subtitle / Value Proposition -->
+    <g transform="translate(0, 114)">
+      <text x="0" y="0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="18" font-weight="500" fill="#F1F5F9">
+        The Terminal Dashboard for Crypto &amp; Meme Coins.
+      </text>
+      <text x="0" y="26" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="400" fill="#94A3B8">
+        Stream live Binance orderbooks &amp; track on-chain DEX pairs
+      </text>
+      <text x="0" y="48" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="400" fill="#94A3B8">
+        across Solana, Base, and Ethereum with zero latency.
+      </text>
+    </g>
+
+    <!-- Feature Chips -->
+    <g transform="translate(0, 210)">
+      <!-- Chip 1 -->
+      <g transform="translate(0, 0)">
+        <rect width="112" height="30" rx="8" fill="#16142A" stroke="#2D2852" stroke-width="1"/>
+        <text x="12" y="19" font-family="'JetBrains Mono', monospace" font-size="11.5" font-weight="600" fill="#38BDF8">● Binance WS</text>
+      </g>
+      <!-- Chip 2 -->
+      <g transform="translate(122, 0)">
+        <rect width="116" height="30" rx="8" fill="#16142A" stroke="#2D2852" stroke-width="1"/>
+        <text x="12" y="19" font-family="'JetBrains Mono', monospace" font-size="11.5" font-weight="600" fill="#A78BFA">● DEX Screener</text>
+      </g>
+      <!-- Chip 3 -->
+      <g transform="translate(248, 0)">
+        <rect width="114" height="30" rx="8" fill="#16142A" stroke="#2D2852" stroke-width="1"/>
+        <text x="12" y="19" font-family="'JetBrains Mono', monospace" font-size="11.5" font-weight="600" fill="#34D399">● Sparklines</text>
+      </g>
+      <!-- Chip 4 -->
+      <g transform="translate(372, 0)">
+        <rect width="104" height="30" rx="8" fill="#16142A" stroke="#2D2852" stroke-width="1"/>
+        <text x="12" y="19" font-family="'JetBrains Mono', monospace" font-size="11.5" font-weight="600" fill="#FBBF24">● Portfolio</text>
+      </g>
+    </g>
+
+    <!-- CLI Command Box -->
+    <g transform="translate(0, 268)">
+      <rect width="360" height="42" rx="10" fill="#0C0A1A" stroke="#312A5E" stroke-width="1.2"/>
+      <text x="18" y="26" font-family="'JetBrains Mono', Consolas, monospace" font-size="14" font-weight="600" fill="#38BDF8">$</text>
+      <text x="34" y="26" font-family="'JetBrains Mono', Consolas, monospace" font-size="14" font-weight="600" fill="#F8FAFC">curl -fsSL ... | bash</text>
+      <text x="248" y="26" font-family="'JetBrains Mono', Consolas, monospace" font-size="12" font-weight="500" fill="#64748B">or</text>
+      <text x="272" y="26" font-family="'JetBrains Mono', Consolas, monospace" font-size="13" font-weight="600" fill="#A78BFA">npx cryptoterm</text>
+    </g>
+  </g>
+
+  <!-- Right Column: Interactive Terminal Window Mockup -->
+  <g transform="translate(568, 44)" filter="url(#cardShadow)">
+    <!-- Terminal Outer Frame -->
+    <rect width="572" height="392" rx="14" fill="#0F0D1E" stroke="url(#cardBorder)" stroke-width="1.5"/>
+
+    <!-- Window Top Header Bar -->
+    <rect width="572" height="40" rx="14" fill="#17142E"/>
+    <rect y="28" width="572" height="12" fill="#17142E"/> <!-- Square off bottom corners of header -->
+    <line x1="0" y1="40" x2="572" y2="40" stroke="#2A244E" stroke-width="1"/>
+
+    <!-- Traffic Lights (macOS buttons) -->
+    <circle cx="22" cy="20" r="6" fill="#FF5F56"/>
+    <circle cx="42" cy="20" r="6" fill="#FFBD2E"/>
+    <circle cx="62" cy="20" r="6" fill="#27C93F"/>
+
+    <!-- Terminal Window Title -->
+    <text x="286" y="25" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="600" fill="#94A3B8">⚡ cryptoterm — 84x24</text>
+
+    <!-- Live Status Indicators -->
+    <circle cx="496" cy="20" r="3.5" fill="#10B981"/>
+    <text x="506" y="24" font-family="'JetBrains Mono', monospace" font-size="10.5" font-weight="600" fill="#10B981">LIVE</text>
+
+    <!-- Table Header Line -->
+    <g transform="translate(20, 64)">
+      <rect width="532" height="26" rx="4" fill="#1B1736"/>
+      <text x="12" y="17" font-family="'JetBrains Mono', monospace" font-size="10.5" font-weight="700" fill="#CBD5E1">TICKER</text>
+      <text x="110" y="17" font-family="'JetBrains Mono', monospace" font-size="10.5" font-weight="700" fill="#CBD5E1">SRC</text>
+      <text x="160" y="17" font-family="'JetBrains Mono', monospace" font-size="10.5" font-weight="700" fill="#CBD5E1">PRICE (USD)</text>
+      <text x="284" y="17" font-family="'JetBrains Mono', monospace" font-size="10.5" font-weight="700" fill="#CBD5E1">24H CHG</text>
+      <text x="390" y="17" font-family="'JetBrains Mono', monospace" font-size="10.5" font-weight="700" fill="#CBD5E1">VOLUME</text>
+      <text x="475" y="17" font-family="'JetBrains Mono', monospace" font-size="10.5" font-weight="700" fill="#CBD5E1">TREND</text>
+    </g>
+
+    <!-- Row 1: BTC (Selected) -->
+    <g transform="translate(20, 96)">
+      <rect width="532" height="36" rx="5" fill="#251F4A"/>
+      <text x="12" y="23" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="700" fill="#38BDF8">▶ BTC</text>
+      <!-- BNC Badge -->
+      <rect x="108" y="10" width="36" height="18" rx="3" fill="#F0B90B"/>
+      <text x="114" y="23" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="800" fill="#000000">BNC</text>
+      <text x="160" y="23" font-family="'JetBrains Mono', monospace" font-size="12.5" font-weight="700" fill="#FFFFFF">$77,886.00</text>
+      <text x="284" y="23" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="700" fill="#34D399">+1.75% ▲</text>
+      <text x="390" y="23" font-family="'JetBrains Mono', monospace" font-size="11.5" font-weight="500" fill="#94A3B8">$1.04B</text>
+      <!-- Sparkline Green -->
+      <path d="M 475 25 L 485 22 L 493 24 L 501 16 L 510 18 L 520 12" fill="none" stroke="#34D399" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+
+    <!-- Row 2: ETH -->
+    <g transform="translate(20, 136)">
+      <text x="24" y="23" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="600" fill="#E2E8F0">ETH</text>
+      <rect x="108" y="10" width="36" height="18" rx="3" fill="#F0B90B"/>
+      <text x="114" y="23" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="800" fill="#000000">BNC</text>
+      <text x="160" y="23" font-family="'JetBrains Mono', monospace" font-size="12.5" font-weight="600" fill="#F8FAFC">$2,492.94</text>
+      <text x="284" y="23" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="700" fill="#34D399">+2.02% ▲</text>
+      <text x="390" y="23" font-family="'JetBrains Mono', monospace" font-size="11.5" font-weight="500" fill="#64748B">$654.8M</text>
+      <path d="M 475 24 L 484 21 L 493 23 L 502 18 L 512 19 L 520 14" fill="none" stroke="#34D399" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+
+    <!-- Row 3: SOL -->
+    <g transform="translate(20, 176)">
+      <text x="24" y="23" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="600" fill="#E2E8F0">SOL</text>
+      <rect x="108" y="10" width="36" height="18" rx="3" fill="#F0B90B"/>
+      <text x="114" y="23" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="800" fill="#000000">BNC</text>
+      <text x="160" y="23" font-family="'JetBrains Mono', monospace" font-size="12.5" font-weight="600" fill="#F8FAFC">$105.96</text>
+      <text x="284" y="23" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="700" fill="#34D399">+6.00% ▲</text>
+      <text x="390" y="23" font-family="'JetBrains Mono', monospace" font-size="11.5" font-weight="500" fill="#64748B">$302.7M</text>
+      <path d="M 475 26 L 484 23 L 492 20 L 502 16 L 511 17 L 520 11" fill="none" stroke="#34D399" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+
+    <!-- Row 4: PEPE -->
+    <g transform="translate(20, 216)">
+      <text x="24" y="23" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="600" fill="#F472B6">PEPE</text>
+      <rect x="108" y="10" width="36" height="18" rx="3" fill="#F0B90B"/>
+      <text x="114" y="23" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="800" fill="#000000">BNC</text>
+      <text x="160" y="23" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="600" fill="#F8FAFC">$0.00000368</text>
+      <text x="284" y="23" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="700" fill="#34D399">+5.44% ▲</text>
+      <text x="390" y="23" font-family="'JetBrains Mono', monospace" font-size="11.5" font-weight="500" fill="#64748B">$25.5M</text>
+      <path d="M 475 25 L 485 24 L 494 18 L 503 21 L 512 15 L 520 13" fill="none" stroke="#34D399" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+
+    <!-- Row 5: POPCAT (DEX Meme) -->
+    <g transform="translate(20, 256)">
+      <text x="24" y="23" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="600" fill="#F472B6">POPCAT</text>
+      <!-- DEX Badge -->
+      <rect x="108" y="10" width="36" height="18" rx="3" fill="#38BDF8"/>
+      <text x="114" y="23" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="800" fill="#000000">DEX</text>
+      <text x="160" y="23" font-family="'JetBrains Mono', monospace" font-size="12.5" font-weight="600" fill="#F8FAFC">$0.04698</text>
+      <text x="284" y="23" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="700" fill="#F87171">-3.20% ▼</text>
+      <text x="390" y="23" font-family="'JetBrains Mono', monospace" font-size="11.5" font-weight="500" fill="#64748B">$283.5K</text>
+      <!-- Sparkline Red -->
+      <path d="M 475 14 L 485 16 L 494 20 L 503 19 L 511 23 L 520 25" fill="none" stroke="#F87171" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+
+    <!-- Row 6: USDC (Stable) -->
+    <g transform="translate(20, 296)">
+      <text x="24" y="23" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="600" fill="#94A3B8">USDC</text>
+      <rect x="108" y="10" width="36" height="18" rx="3" fill="#F0B90B"/>
+      <text x="114" y="23" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="800" fill="#000000">BNC</text>
+      <text x="160" y="23" font-family="'JetBrains Mono', monospace" font-size="12.5" font-weight="600" fill="#F8FAFC">$1.0000</text>
+      <text x="284" y="23" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="500" fill="#94A3B8"> 0.00% ━</text>
+      <text x="390" y="23" font-family="'JetBrains Mono', monospace" font-size="11.5" font-weight="500" fill="#64748B">$2.80B</text>
+      <line x1="475" y1="20" x2="520" y2="20" stroke="#64748B" stroke-width="1.5" stroke-dasharray="3,2"/>
+    </g>
+
+    <!-- Bottom Status / Shortcut Bar -->
+    <g transform="translate(0, 352)">
+      <rect width="572" height="40" rx="14" fill="#131026"/>
+      <rect y="0" width="572" height="14" fill="#131026"/> <!-- Square off top corners of footer -->
+      <line x1="0" y1="0" x2="572" y2="0" stroke="#251F47" stroke-width="1"/>
+      <text x="20" y="25" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="600" fill="#38BDF8">[a] Add</text>
+      <text x="96" y="25" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="600" fill="#38BDF8">[/] Filter</text>
+      <text x="188" y="25" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="600" fill="#38BDF8">[s] Sort</text>
+      <text x="270" y="25" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="600" fill="#38BDF8">[c] Config</text>
+      <text x="368" y="25" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="600" fill="#38BDF8">[!] Alert</text>
+      <text x="458" y="25" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="600" fill="#38BDF8">[q] Quit</text>
+    </g>
+  </g>
+</svg>

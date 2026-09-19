@@ -22,6 +22,9 @@ func (m UIModel) View() string {
 	if m.ShowAlertModal {
 		return m.renderWithModal(m.AlertModal.View())
 	}
+	if m.ShowAIModal {
+		return m.renderWithModal(m.AIModal.View(m.Width))
+	}
 	if m.ShowHelp {
 		return m.renderWithModal(m.renderHelpOverlay())
 	}
@@ -389,6 +392,7 @@ func (m UIModel) renderFooter() string {
 	// Shortcuts
 	hints := []string{
 		StyleHelpKey.Render("[a]") + StyleHelpDesc.Render(" Add"),
+		StyleHelpKey.Render("[x]") + StyleHelpDesc.Render(" AI Signal"),
 		StyleHelpKey.Render("[d]") + StyleHelpDesc.Render(" Remove"),
 		StyleHelpKey.Render("[/]") + StyleHelpDesc.Render(" Filter"),
 		StyleHelpKey.Render("[s]") + StyleHelpDesc.Render(" Sort"),
@@ -398,7 +402,6 @@ func (m UIModel) renderFooter() string {
 		StyleHelpKey.Render("[?]") + StyleHelpDesc.Render(" Help"),
 		StyleHelpKey.Render("[q]") + StyleHelpDesc.Render(" Quit"),
 	}
-
 	shortcuts := strings.Join(hints, "  ")
 	return fmt.Sprintf("%s\n%s%s", divider, toastBar, shortcuts)
 }
@@ -415,8 +418,8 @@ func (m UIModel) renderHelpOverlay() string {
 		{"↑ / ↓ or j / k", "Navigate up and down the token list"},
 		{"Enter", "View detailed statistics and price history for selected token"},
 		{"a", "Add a new token (supports Binance symbols or DEX contract addresses)"},
-		{"d / x", "Delete selected token from your watchlist"},
-		{"s", "Cycle sort mode (Default, 24h Change, Price, Volume, Name)"},
+		{"x", "Generate AI Copilot market signal & trade setup for selected token"},
+		{"d", "Delete selected token from your watchlist"},
 		{"/", "Quick filter/search tokens in current watchlist"},
 		{"c", "Configure Binance API Key & Secret (for Portfolio view) and currency"},
 		{"!", "Set custom price target alert for selected token"},

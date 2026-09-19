@@ -92,3 +92,76 @@ func TestUIModelRender(t *testing.T) {
 		t.Errorf("Expected '$0.00004523', got %s", pMeme)
 	}
 }
+
+func TestAIModalRender(t *testing.T) {
+	cfg, err := config.Load()
+	if err != nil {
+		t.Fatalf("Failed to load config: %v", err)
+	}
+	// Ensure no AI key for initial test
+	cfg.AIAPIKey = ""
+
+	app := ui.NewUIModel(cfg)
+	app.Width = 120
+	app.Height = 35
+
+	// Seed a token market data
+	app.MarketData["BTCUSDT"] = model.MarketData{
+		Symbol:        "BTCUSDT",
+		DisplaySymbol: "BTC",
+		Price:         78000,
+	}
+
+	// Press 'x' to trigger AI Copilot
+	updatedModel, _ := app.Update(tea.KeyMsg{Type: tea.KeyRunes, Runes: []rune{'x'}})
+	app = updatedModel.(ui.UIModel)
+
+	if !app.ShowAIModal {
+		t.Fatalf("Expected ShowAIModal to be true after pressing 'x'")
+	}
+
+	viewNoKey := app.View()
+	if !strings.Contains(viewNoKey, "AI MARKET SIGNAL ANALYZER") {
+		t.Errorf("Expected view to show AI analyzer title")
+	}
+	if !strings.Contains(viewNoKey, "Bring Your Own Key") {
+		t.Errorf("Expected view to show BYOK guidance when key is missing")
+	}
+
+	// Simulate successful AI signal arrival
+	signalMsg := ui.AISignalResultMsg{
+		Signal: &model.AISignal{
+			Symbol:        "BTCUSDT",
+			DisplaySymbol: "BTC",
+			Action:        "STRONG_BUY",
+			Confidence:    9.0,
+			RiskLevel:     "LOW",
+			EntryZone:     "$77,500 - $78,200",
+			TakeProfit1:   82000,
+			TakeProfit2:   85000,
+			StopLoss:      75500,
+			RiskReward:    "1 : 2.8",
+			Reasoning:     []string{"Bullish continuation on 1h timeframe", "RSI neutral accumulation"},
+			LatencyMs:     350,
+		},
+		Err: nil,
+	}
+
+	updatedModel, _ = app.Update(signalMsg)
+	app = updatedModel.(ui.UIModel)
+
+	viewSuccess := app.View()
+	if !strings.Contains(viewSuccess, "STRONG BUY") {
+		t.Errorf("Expected view to contain 'STRONG BUY'")
+	}
+	if !strings.Contains(viewSuccess, "77,500") {
+		t.Errorf("Expected view to contain entry zone")
+	}
+
+	// Press Esc to close
+	updatedModel, _ = app.Update(tea.KeyMsg{Type: tea.KeyEsc})
+	app = updatedModel.(ui.UIModel)
+	if app.ShowAIModal {
+		t.Errorf("Expected ShowAIModal to be false after pressing Esc")
+	}
+}

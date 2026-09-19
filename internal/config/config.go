@@ -172,6 +172,9 @@ func Load() (*model.Config, error) {
 			SoundAlerts:        true,
 			Watchlist:          DefaultWatchlist(),
 			Alerts:             []model.PriceAlert{},
+			AIProvider:         "gemini",
+			AIModel:            "gemini-2.0-flash",
+			AITradingStyle:     "daytrader",
 		}
 		if err := saveInternal(cfg, configFile); err != nil {
 			return nil, fmt.Errorf("failed to save initial config: %w", err)
@@ -201,7 +204,15 @@ func Load() (*model.Config, error) {
 	if len(cfg.Watchlist) == 0 {
 		cfg.Watchlist = DefaultWatchlist()
 	}
-
+	if cfg.AIProvider == "" {
+		cfg.AIProvider = "gemini"
+	}
+	if cfg.AIModel == "" {
+		cfg.AIModel = "gemini-2.0-flash"
+	}
+	if cfg.AITradingStyle == "" {
+		cfg.AITradingStyle = "daytrader"
+	}
 	return &cfg, nil
 }
 

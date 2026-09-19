@@ -243,3 +243,65 @@ func (c *BinanceRESTClient) FetchPortfolio(priceMap map[string]float64) ([]model
 
 	return items, nil
 }
+
+// FetchKlines retrieves candlestick history for indicator calculation.
+func (c *BinanceRESTClient) FetchKlines(symbol string, interval string, limit int) ([]model.Kline, error) {
+	upper := strings.ToUpper(strings.TrimSpace(symbol))
+	if !strings.HasSuffix(upper, "USDT") {
+		upper = upper + "USDT"
+	}
+	if interval == "" {
+		interval = "1h"
+	}
+	if limit <= 0 || limit > 100 {
+		limit = 50
+	}
+
+	reqURL := fmt.Sprintf("%s/api/v3/klines?symbol=%s&interval=%s&limit=%d",
+		binancePublicRESTURL, upper, interval, limit)
+
+	resp, err := c.client.Get(reqURL)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("binance klines returned status %d", resp.StatusCode)
+	}
+
+	var raw [][]interface{}
+	if err := json.NewDecoder(resp.Body).Decode(&raw); err != nil {
+		return nil, err
+	}
+
+	var klines []model.Kline
+	for _, item := range raw {
+		if len(item) < 6 {
+			continue
+		}
+		openTimeMs, _ := item[0].(float64)
+		openStr, _ := item[1].(string)
+		highStr, _ := item[2].(string)
+		lowStr, _ := item[3].(string)
+		closeStr, _ := item[4].(string)
+		volStr, _ := item[5].(string)
+
+		open, _ := strconv.ParseFloat(openStr, 64)
+		high, _ := strconv.ParseFloat(highStr, 64)
+		low, _ := strconv.ParseFloat(lowStr, 64)
+		closePrice, _ := strconv.ParseFloat(closeStr, 64)
+		vol, _ := strconv.ParseFloat(volStr, 64)
+
+		klines = append(klines, model.Kline{
+			OpenTime: time.UnixMilli(int64(openTimeMs)),
+			Open:     open,
+			High:     high,
+			Low:      low,
+			Close:    closePrice,
+			Volume:   vol,
+		})
+	}
+
+	return klines, nil
+}

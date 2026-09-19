@@ -1,13 +1,16 @@
 package ui
 
 import (
+	"context"
 	"fmt"
 	"sort"
 	"strings"
 	"time"
 
+	"github.com/fchyoga/cryptoterm/internal/ai"
 	"github.com/fchyoga/cryptoterm/internal/api"
 	"github.com/fchyoga/cryptoterm/internal/config"
+	"github.com/fchyoga/cryptoterm/internal/indicator"
 	"github.com/fchyoga/cryptoterm/internal/model"
 
 	"github.com/charmbracelet/bubbles/textinput"
@@ -31,7 +34,7 @@ type (
 	WSStatusMsg        bool
 	DexTickMsg         struct{}
 	TrendingMemesMsg   []model.MarketData
-	PortfolioMsg    struct {
+	PortfolioMsg struct {
 		Items []model.PortfolioItem
 		Err   error
 	}
@@ -39,7 +42,12 @@ type (
 		Text   string
 		IsBell bool
 	}
-	ClearToastMsg struct{}
+	ClearToastMsg     struct{}
+	AISignalResultMsg struct {
+		Signal *model.AISignal
+		Err    error
+	}
+	AISpinnerTickMsg struct{}
 )
 
 // UIModel is the root Bubbletea model.
@@ -60,6 +68,8 @@ type UIModel struct {
 	ConfigModal     ConfigModal
 	ShowAlertModal  bool
 	AlertModal      AlertModal
+	ShowAIModal     bool
+	AIModal         AIModal
 	ShowHelp        bool
 
 	// Search / Filter
@@ -231,6 +241,20 @@ func (m UIModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	case ClearToastMsg:
 		m.ToastMessage = ""
 
+	case AISpinnerTickMsg:
+		if m.ShowAIModal && m.AIModal.State == AIStateLoading {
+			m.AIModal.NextSpinner()
+			cmds = append(cmds, tickAISpinner())
+		}
+
+	case AISignalResultMsg:
+		if msg.Err != nil {
+			m.AIModal.State = AIStateError
+			m.AIModal.ErrorMessage = msg.Err.Error()
+		} else {
+			m.AIModal.State = AIStateSuccess
+			m.AIModal.Signal = msg.Signal
+		}
 	case tea.KeyMsg:
 		// Modal handling takes precedence
 		if m.ShowAddModal {
@@ -290,6 +314,27 @@ func (m UIModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			}
 			return m, nil
 		}
+		if m.ShowAIModal {
+			closeModal, retry, openCfg := m.AIModal.Update(msg)
+			if closeModal {
+				m.ShowAIModal = false
+				return m, nil
+			}
+			if openCfg {
+				m.ShowAIModal = false
+				m.ConfigModal = NewConfigModal(m.Cfg)
+				m.ShowConfigModal = true
+				return m, nil
+			}
+			if retry {
+				return m, tea.Batch(
+					generateAISignalCmd(m.Cfg, m.BinanceREST, m.AIModal.Token, m.AIModal.Market),
+					tickAISpinner(),
+				)
+			}
+			return m, nil
+		}
+
 
 		if m.ShowHelp {
 			if msg.String() == "esc" || msg.String() == "?" || msg.String() == "q" {
@@ -373,7 +418,7 @@ func (m UIModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				m.ShowAlertModal = true
 			}
 
-		case "d", "x":
+		case "d":
 			// Delete token from watchlist
 			filtered := m.getFilteredWatchlist()
 			if len(filtered) > 0 && m.SelectedIdx < len(filtered) {
@@ -390,6 +435,40 @@ func (m UIModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 					m.SelectedIdx--
 				}
 				cmds = append(cmds, showToast(fmt.Sprintf("Removed %s", target.DisplaySymbol), false))
+			}
+
+		case "x", "X":
+			// Open AI Copilot Signal Analyzer
+			var target model.WatchItem
+			if m.ActiveTab == ViewMemeRadar {
+				if len(m.TrendingMemes) > 0 && m.MemeSelectedIdx < len(m.TrendingMemes) {
+					mem := m.TrendingMemes[m.MemeSelectedIdx]
+					target = model.WatchItem{
+						Symbol:        mem.Symbol,
+						DisplaySymbol: mem.DisplaySymbol,
+						Name:          mem.DisplaySymbol,
+						Source:        model.SourceDEX,
+						Category:      model.TypeMeme,
+						Chain:         mem.Chain,
+					}
+				}
+			} else {
+				filtered := m.getFilteredWatchlist()
+				if len(filtered) > 0 && m.SelectedIdx < len(filtered) {
+					target = filtered[m.SelectedIdx]
+				}
+			}
+
+			if target.Symbol != "" {
+				market := m.MarketData[target.Symbol]
+				m.AIModal = NewAIModal(m.Cfg, target, market)
+				m.ShowAIModal = true
+				if m.AIModal.State == AIStateLoading {
+					cmds = append(cmds,
+						generateAISignalCmd(m.Cfg, m.BinanceREST, target, market),
+						tickAISpinner(),
+					)
+				}
 			}
 
 		case "s":
@@ -544,4 +623,54 @@ func showToast(text string, bell bool) tea.Cmd {
 	return func() tea.Msg {
 		return ToastMsg{Text: text, IsBell: bell}
 	}
+}
+
+func generateAISignalCmd(
+	cfg *model.Config,
+	rest *api.BinanceRESTClient,
+	token model.WatchItem,
+	market model.MarketData,
+) tea.Cmd {
+	return func() tea.Msg {
+		ctx, cancel := context.WithTimeout(context.Background(), 25*time.Second)
+		defer cancel()
+
+		var klines []model.Kline
+		if token.Source == model.SourceBinance {
+			var err error
+			klines, err = rest.FetchKlines(token.Symbol, "1h", 40)
+			if err != nil {
+				// Fallback to recent price history from market data if klines fail
+				for _, p := range market.PriceHistory {
+					klines = append(klines, model.Kline{
+						Close: p,
+						High:  p,
+						Low:   p,
+					})
+				}
+			}
+		} else {
+			// For DEX tokens, synthesize kline points from price history
+			for _, p := range market.PriceHistory {
+				klines = append(klines, model.Kline{
+					Close: p,
+					High:  p,
+					Low:   p,
+				})
+			}
+		}
+
+		tech := indicator.AnalyzeTechnicals(market.Price, klines)
+		sig, err := ai.GenerateSignal(ctx, cfg, token, market, tech)
+		return AISignalResultMsg{
+			Signal: sig,
+			Err:    err,
+		}
+	}
+}
+
+func tickAISpinner() tea.Cmd {
+	return tea.Tick(80*time.Millisecond, func(t time.Time) tea.Msg {
+		return AISpinnerTickMsg{}
+	})
 }

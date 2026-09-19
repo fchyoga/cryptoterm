@@ -86,6 +86,7 @@ Whether monitoring benchmark assets ($BTC, $ETH, $SOL), observing stablecoin peg
 - **High-Resolution Braille Sparklines**: Renders dynamic price trajectory micro-charts directly inside terminal row buffers without external graphical dependencies.
 - **Local Credential Boundary**: If you choose to monitor spot wallet balances via Binance API, your credentials are encrypted locally on disk at `~/.config/cryptoterm/config.json` and transmitted strictly to Binance's signed endpoints via HMAC-SHA256. Zero telemetry, zero analytics, zero intermediaries.
 - **Audio & Visual Price Alerts**: Set arbitrary price thresholds on any tracked pair. Crossings trigger immediate visual badges and native terminal bell (`\a`) audio cues.
+- **Universal AI Signal Copilot (BYOK)**: Integrated quantitative AI analyst powered by **Google Gemini**, **OpenRouter / 9router**, **DeepSeek**, **Groq**, **OpenAI**, **Anthropic**, or local **Ollama**. Combines real-time technical indicators (RSI 14, EMA 20/50, Support/Resistance) to generate actionable setups with Entry Zone, Take-Profit targets, Stop Loss, and Risk/Reward ratios.
 
 ---
 
@@ -156,7 +157,8 @@ cryptoterm
 | `↑` / `↓` or `j` / `k` | List | Move cursor selection up / down |
 | `Enter` | List | Drill into detailed view for selected asset (deep statistics & enlarged sparkline) |
 | `a` | Global | **Add Token**: Opens interactive modal (supports exchange symbols and on-chain contract addresses) |
-| `d` or `x` | Watchlist | **Delete Token**: Removes selected token from local watchlist |
+| `x` | Global | **AI Signal Copilot**: Launch quantitative AI analysis, technical confluence, and actionable trade setup |
+| `d` | Watchlist | **Delete Token**: Removes selected token from local watchlist |
 | `/` | Watchlist | **Live Filter**: Instant substring search across token symbols, names, and categories |
 | `s` | Watchlist | **Sort Cycle**: Switch sorting by Default, 24h Change (%), Price, Volume, or Name |
 | `c` | Global | **Configuration**: Set Binance API credentials, toggle currency display (`USD` / `IDR`), toggle sound |
@@ -195,6 +197,41 @@ Configuration parameters are saved strictly to:
    - *Example Solana SPL Mint*: `7GCihgDB8fe6KNjn2MYtkzZcRjQy3t9GHdC8uHYmW2hr` (POPCAT)
 3. Select source as `DEX (DexScreener)` or leave on `Auto-Detect`.
 4. Press `Enter`. `cryptoterm` will query liquidity pool contracts, resolve the base/quote pair, calculate USD valuation, and stream updates into your watchlist.
+
+---
+
+## 🤖 AI Market Signal Copilot (BYOK)
+
+`cryptoterm` features a built-in quantitative **AI Copilot** accessible by pressing **`x`** on any selected cryptocurrency or DEX meme coin.
+
+Designed around the **BYOK (Bring Your Own Key)** architecture:
+- **100% Client-Side & Private**: API requests are dispatched directly from your terminal to your chosen AI provider. No telemetry, no proxy servers, no subscription fees.
+- **Quantitative Technical Confluence**: Rather than asking an LLM blindly, `cryptoterm` first calculates mathematical indicators locally before prompting:
+  - **RSI (14)** via Wilder's smoothing algorithm.
+  - **EMA (20) & EMA (50)** dynamic trend crossover detection.
+  - **Local Swing High/Low** support & resistance boundaries.
+  - **Orderbook Imbalance** (Binance) and **Liquidity / FDV Ratios** (DEX pairs).
+
+### Supported AI Providers & Models
+
+| Provider | Default Model | Highlights | Setup URL |
+| :--- | :--- | :--- | :--- |
+| **Google Gemini** | `gemini-2.0-flash` | **100% Free tier available**, multimodal, lightning fast | [aistudio.google.com](https://aistudio.google.com) |
+| **Groq** | `llama-3.3-70b-versatile` | Sub-500ms inference speed, free tier | [console.groq.com](https://console.groq.com) |
+| **OpenRouter / 9router** | `deepseek/deepseek-chat` | Universal multi-model gateway (DeepSeek R1, LLaMA, Qwen) | [openrouter.ai](https://openrouter.ai) |
+| **DeepSeek** | `deepseek-chat` | State-of-the-art reasoning at ultra-low cost | [platform.deepseek.com](https://platform.deepseek.com) |
+| **OpenAI** | `gpt-4o-mini` | Stable, industry-standard reasoning | [platform.openai.com](https://platform.openai.com) |
+| **Anthropic** | `claude-3-5-sonnet-20241022` | Exceptional chart pattern & technical reasoning | [console.anthropic.com](https://console.anthropic.com) |
+| **Ollama (Local)** | `llama3.2` | **100% Free, offline, private** on `localhost:11434` (no key needed!) | [ollama.ai](https://ollama.ai) |
+| **Custom Router** | User-defined | Configurable Base URL & model identifier | Any OpenAI-compatible endpoint |
+
+### How to Configure AI:
+1. Press **`c`** to open the Settings modal.
+2. Use `←` / `→` to select your preferred **AI Provider**.
+3. Paste your **AI API Key** (or leave empty if using local Ollama).
+4. Choose your **Analysis Style**: `Day Trader`, `Scalper`, or `Degen Meme Hunter`.
+5. Navigate to **[ SAVE ALL SETTINGS ]** and press `Enter`.
+6. On any token in your Watchlist or Meme Radar, press **`x`** to receive a structured trade signal.
 
 ---
 

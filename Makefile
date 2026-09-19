@@ -1,5 +1,5 @@
 APP_NAME := cryptoterm
-VERSION := 1.0.0
+VERSION := 1.1.0
 BUILD_DIR := dist
 LDFLAGS := -s -w
 

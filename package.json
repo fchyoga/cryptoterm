@@ -1,7 +1,7 @@
 {
   "name": "cryptoterm",
-  "version": "1.0.0",
-  "description": "Ultra-fast TUI crypto & meme coin terminal. Live Binance WebSocket tickers, DEX meme tracking (Solana, Base, ETH), sparklines, price alerts & portfolio tracker.",
+  "version": "1.1.0",
+  "description": "Ultra-fast TUI crypto & meme coin terminal with Universal AI Signal Copilot (Gemini, OpenRouter, DeepSeek, Groq).",
   "main": "bin/cli.js",
   "bin": {
     "cryptoterm": "./bin/cli.js"
